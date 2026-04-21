@@ -1,0 +1,23 @@
+# Compiled binaries
+hello
+*.exe
+*.out
+a.out
+
+# Object files
+*.o
+*.obj
+
+# Editor files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
