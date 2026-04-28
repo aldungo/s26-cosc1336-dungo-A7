@@ -1,7 +1,7 @@
-# Assignment 6: Overloaded Hospital Charges
+# Assignment 7: Car Class
 
 **Course:** COSC 1336 - C++ Programming I  
-**Assignment Type:** Core Programming Skills - Function Overloading & Input Validation
+**Assignment Type:** Core Programming Skills - Classes & Objects
 
 ---
 
@@ -9,70 +9,77 @@
 
 By completing this assignment, you will demonstrate your ability to:
 
-- Use **function overloading** to define two functions with the same name but different parameter lists
-- Collect and validate user input, rejecting negative values
-- Use an `if/else` structure to branch program logic based on user input
-- Return computed values from functions and display them in `main`
-- Write clean, well-documented code that solves a real-world problem
+- Define a **class** with private member variables and public member functions
+- Write a **constructor** that initializes an object's state at creation
+- Implement **accessor functions** (getters) to safely expose private data
+- Use **mutator-style methods** to modify an object's state
+- Instantiate a class and interact with it through its public interface in `main`
+- Write clean, well-documented code that models a real-world object
 
 ---
 
 ## 📝 The Problem
 
-A local hospital is overloaded and needs help tracking patient billing. Depending on how a patient was admitted, different charges apply.
+You need to model a car in software. A car has some fixed properties (its year and make) and one property that changes over time — its speed.
 
 ### Your Task
 
-Write a program that:
+Write a `Car` class and a demonstration program that:
 
-1. **Asks** whether the patient was admitted as an **inpatient** or an **outpatient**
-2. **Collects** the appropriate charges based on admission type
-3. **Calls** the correct overloaded `calcCharges` function to compute the total
-4. **Displays** the total charges to the screen
+1. **Defines** the `Car` class with the required member variables and functions
+2. **Creates** a `Car` object using the constructor
+3. **Accelerates** the car five times, displaying the speed after each call
+4. **Brakes** the car five times, displaying the speed after each call
 
 ---
 
-## 🔢 Input and Output Requirements
+## 🔢 Class Specification
 
-### Inpatient Data
+### Member Variables
 
-If the patient was admitted as an inpatient, prompt for:
-- Number of days spent in the hospital
-- Daily rate
-- Hospital medication charges
-- Charges for hospital services (lab tests, etc.)
+| Variable | Type | Description |
+|----------|------|-------------|
+| `yearModel` | `int` | The car's year model |
+| `make` | `string` | The make (manufacturer) of the car |
+| `speed` | `int` | The car's current speed |
 
-### Outpatient Data
+### Constructor
 
-If the patient was admitted as an outpatient, prompt for:
-- Charges for hospital services (lab tests, etc.)
-- Hospital medication charges
+- Accepts the car's **year model** and **make** as arguments
+- Assigns those arguments to `yearModel` and `make`
+- Initializes `speed` to **zero**
 
-### Input Validation
+### Member Functions
 
-- **Do not accept negative numbers for any input.** Re-prompt the user until a valid (non-negative) value is entered.
-
-### Output Specifications
-
-After collecting all data, display:
-- The **total charges** for the patient's stay
+| Function | Description |
+|----------|-------------|
+| `getYearModel()` | Returns the value of `yearModel` |
+| `getMake()` | Returns the value of `make` |
+| `getSpeed()` | Returns the value of `speed` |
+| `accelerate()` | Adds **5** to `speed` each time it is called |
+| `brake()` | Subtracts **5** from `speed` each time it is called |
 
 ---
 
 ## 💡 Example Program Run
 
 ```
-Is the patient an inpatient or outpatient? (I/O): I
+Accelerating...
+Speed: 5
+Speed: 10
+Speed: 15
+Speed: 20
+Speed: 25
 
-Enter number of days in hospital: 5
-Enter daily rate: $150.00
-Enter hospital medication charges: $200.00
-Enter charges for hospital services: $75.00
-
-Total charges: $1025.00
+Braking...
+Speed: 20
+Speed: 15
+Speed: 10
+Speed: 5
+Speed: 0
 ```
 
-*(The values above are examples — your output should reflect what the user actually entered.)*
+*(The exact formatting is up to you — what matters is that the speeds are correct and displayed after each call.)*
 
 ---
 
@@ -82,86 +89,79 @@ Total charges: $1025.00
 
 Before writing any code, make sure you understand:
 
-- **What are the two patient types?** Inpatient (admitted overnight) and outpatient (treated and released the same day).
-- **Why two overloaded functions?** Inpatients and outpatients have different data — function overloading lets you use the same function name (`calcCharges`) for both by giving each a different parameter list.
-- **What does each function return?** The total charges as a `double`.
+- **What is a class?** A class is a blueprint for creating objects. It bundles related data (member variables) and behavior (member functions) together.
+- **Why private member variables?** Keeping `yearModel`, `make`, and `speed` private means outside code cannot change them directly — it must go through the class's public functions. This is called **encapsulation**.
+- **What does the constructor do?** It runs automatically when an object is created and sets the initial state. Here, speed always starts at zero, while year and make come from the caller.
 
-**Think about this:** How does the hospital arrive at a total for each type? An inpatient's bill depends partly on how many nights they stayed, while an outpatient's does not.
+**Think about this:** Why should `speed` never go below zero? Could `brake()` cause that, and does the assignment require you to guard against it?
 
 ---
 
 ### Step 2: Set Up Your Development Environment
 
 1. Open your GitHub Codespace for this assignment
-2. Locate the starter file: `a6main.cpp`
+2. Locate the starter file: `a7main.cpp`
 3. Open the terminal in VS Code
 
 ---
 
 ### Step 3: Plan Your Solution
 
-Create a design document (pseudocode or flowchart) that outlines your approach. Your design should include:
+Create a design document (pseudocode or flowchart) that outlines your approach. Your design should address:
 
-**Part A: Getting the Patient Type**
-- How will you ask the user inpatient or outpatient?
-- What input values are you accepting? (`'I'`/`'O'`, `1`/`2`, etc.)
-- How will your `if/else` branch to the correct section?
+**Part A: The Class Definition**
+- What access specifier (`private`/`public`) belongs to each member?
+- Where does the constructor's initialization list or body go?
+- What type does each accessor return?
 
-**Part B: Collecting and Validating Input**
-- What variables do you need for each patient type?
-- How do you loop until the user enters a non-negative number?
-- Should validation live in `main` or in a separate helper?
+**Part B: `accelerate()` and `brake()`**
+- These functions modify `speed` — should they return a value or be `void`?
+- What is the simplest body for each?
 
-**Part C: The Two Overloaded Functions**
-- What parameters does the inpatient version need?
-- What parameters does the outpatient version need?
-- What does each function calculate and return?
-
-**Part D: Output**
-- What should the final output look like?
-- Does your output match the format shown in the example?
+**Part C: The Demonstration in `main`**
+- How will you create the `Car` object? What year and make will you use?
+- What loop (or repeated calls) will you use for the five accelerations and five brakes?
+- How will you retrieve and display the speed after each call?
 
 ---
 
 ### Step 4: Write Your Code
 
-Open `a6main.cpp` and implement your solution following this structure:
+Open `a7main.cpp` and implement your solution following this structure:
 
 #### Include Necessary Libraries
 
 Think about what you need:
 - Input and output operations
+- String support for the `make` member variable
 
-#### Define the Two Overloaded Functions
+#### Define the `Car` Class
 
-Both functions should be named `calcCharges` and return a `double`.
+```
+class Car
+{
+private:
+    int yearModel;
+    string make;
+    int speed;
 
-**Inpatient version** — accepts:
-- `int` days in hospital
-- `double` daily rate
-- `double` medication charges
-- `double` services charges
+public:
+    Car(int year, string carMake);   // constructor
+    int getYearModel();
+    string getMake();
+    int getSpeed();
+    void accelerate();
+    void brake();
+};
+```
 
-**Outpatient version** — accepts:
-- `double` services charges
-- `double` medication charges
+Implement each function either **inline** inside the class body or **outside** using the scope resolution operator (`::`). Either approach is acceptable.
 
-Place function **prototypes** above `main` and **definitions** below it (or define them above `main` — either is fine as long as the prototypes are present).
+#### In `main`: Create and Drive the Car
 
-#### In `main`: Ask for Patient Type
-
-Prompt the user and read their choice. Use an `if/else` (or `switch`) to branch into the correct section.
-
-#### In Each Branch: Collect and Validate Input
-
-For each value you need to collect:
-- Prompt and read the value
-- If the value is negative, display an error and re-prompt
-- Repeat until a valid value is entered
-
-#### Call the Correct Function and Display the Result
-
-Pass the collected values to the appropriate `calcCharges` function, store the return value, and display it.
+- Instantiate a `Car` object with your chosen year and make
+- Call `accelerate()` five times; after each call, print the current speed
+- Call `brake()` five times; after each call, print the current speed
 
 ---
 
@@ -171,21 +171,21 @@ Pass the collected values to the appropriate `calcCharges` function, store the r
 
 In the terminal, compile with:
 ```bash
-g++ a6main.cpp -o a6main
+g++ a7main.cpp -o a7main
 ```
 
 **If compilation fails:**
 - Read error messages carefully — they tell you what's wrong
 - Check for common issues:
-  - Missing semicolons
-  - Misspelled variable names
-  - Forgotten `#include` statements
+  - Missing semicolons (especially the one after the closing `}` of the class)
+  - Forgotten `#include <string>` or `using namespace std;`
+  - Scope resolution errors when defining functions outside the class
   - Mismatched braces `{}`
 
 #### Run Your Program
 
 ```bash
-./a6main
+./a7main
 ```
 
 #### Test Thoroughly
@@ -194,13 +194,10 @@ Use these checks to verify your program works correctly:
 
 | Check | What to Verify |
 |-------|----------------|
-| Inpatient path works | Are all four fields prompted? Is the total correct? |
-| Outpatient path works | Are both fields prompted? Is the total correct? |
-| Negative input rejected | Does the program re-prompt when a negative value is entered? |
-| Zero is accepted | Is `0` treated as a valid (non-negative) entry? |
-| Math is correct | Manually calculate the expected total and confirm it matches |
-
-**Important:** Test both the inpatient and outpatient paths every time you make a change — a bug in one branch won't always show up when testing the other.
+| Constructor sets speed to 0 | Print `getSpeed()` before any calls — should be `0` |
+| `accelerate()` adds 5 each time | Speeds after 5 calls should be 5, 10, 15, 20, 25 |
+| `brake()` subtracts 5 each time | Speeds after 5 calls should be 20, 15, 10, 5, 0 |
+| Accessors return correct values | `getYearModel()` and `getMake()` match what you passed to the constructor |
 
 ---
 
@@ -210,10 +207,8 @@ Use these checks to verify your program works correctly:
 
 Capture clear screenshots showing:
 1. ✅ Your program compiling without errors
-2. ✅ An inpatient test run with correct output
-3. ✅ An outpatient test run with correct output
-4. ✅ At least one test showing negative-input rejection
-5. ✅ Your complete code in the editor
+2. ✅ A complete program run with all ten speed outputs visible
+3. ✅ Your complete code in the editor
 
 Save screenshots as PNG or JPG files.
 
@@ -224,10 +219,10 @@ Submit either:
 - **Flowchart:** Draw a visual representation of your program's logic
 
 **What to include:**
-- How the patient type is determined
-- The branching structure for inpatient vs. outpatient
-- The input-validation loop
-- How each overloaded function is called and what it returns
+- The class layout (member variables and their access levels)
+- What the constructor does
+- How `accelerate()` and `brake()` modify `speed`
+- The flow of `main` — creating the object, the acceleration loop, and the braking loop
 
 **Tools for flowcharts:**
 - [Draw.io](https://draw.io) (free, online)
@@ -241,10 +236,10 @@ Submit either:
 
 Before submitting, verify you have:
 
-- [ ] **Source Code:** `a6main.cpp` - complete, commented, properly formatted
-- [ ] **Two overloaded functions:** Both named `calcCharges`, each with a different parameter list
-- [ ] **Input validation:** No negative values accepted for any field
-- [ ] **Screenshots:** Test runs for both patient types, including negative-input rejection
+- [ ] **Source Code:** `a7main.cpp` — complete, commented, properly formatted
+- [ ] **`Car` class:** All three member variables, constructor, three accessors, `accelerate()`, and `brake()` implemented
+- [ ] **Correct behavior:** Speed increases by 5 per `accelerate()` call and decreases by 5 per `brake()` call
+- [ ] **Screenshots:** Full program run showing all speed outputs
 - [ ] **Design Document:** Pseudocode or flowchart (PDF, image, or Word doc)
 
 ---
@@ -256,10 +251,11 @@ Before submitting, verify you have:
 | Criteria | Points |
 |----------|--------|
 | Program compiles without errors | 10 |
-| Correctly identifies inpatient vs. outpatient and branches accordingly | 10 |
-| Inpatient `calcCharges` function computes the correct total | 15 |
-| Outpatient `calcCharges` function computes the correct total | 15 |
-| Negative input is rejected and user is re-prompted | 10 |
+| `Car` class defined with correct member variables and access specifiers | 10 |
+| Constructor correctly initializes `yearModel`, `make`, and `speed` | 10 |
+| `accelerate()` and `brake()` update `speed` by the correct amount | 15 |
+| Accessor functions return the correct values | 10 |
+| `main` demonstrates the class with 5 accelerations and 5 brakes, displaying speed each time | 5 |
 
 ### Code Quality (20 points)
 
@@ -282,7 +278,7 @@ Before submitting, verify you have:
 
 | Criteria | Points |
 |----------|--------|
-| Screenshots show both patient-type paths running correctly | 3 |
+| Screenshots show the program running correctly | 3 |
 | All required materials submitted | 2 |
 
 **Total: 100 points**
@@ -291,63 +287,52 @@ Before submitting, verify you have:
 
 ## 💡 Helpful Hints
 
-### What Is Function Overloading?
+### What Is a Class?
 
-In C++, two functions can share the same name as long as their **parameter lists are different** — different number of parameters, different types, or both. The compiler picks the right version based on what arguments you pass.
-
-```cpp
-// Inpatient version
-double calcCharges(int days, double dailyRate, double meds, double services);
-
-// Outpatient version
-double calcCharges(double services, double meds);
-```
-
-When you call `calcCharges(days, rate, meds, services)`, the compiler matches the four-argument call to the inpatient version automatically.
-
-### Input Validation Loop Pattern
-
-A reliable way to keep asking until the user enters a valid value:
+A class groups related **data** and **behavior** into a single unit. The data are the member variables; the behavior is defined by the member functions. When you create an object from a class, that object gets its own copy of every member variable.
 
 ```cpp
-cout << "Enter daily rate: $";
-cin >> dailyRate;
-while (dailyRate < 0)
+class Car
 {
-    cout << "Invalid. Please enter a non-negative value: $";
-    cin >> dailyRate;
+private:
+    int yearModel;
+    string make;
+    int speed;
+public:
+    Car(int year, string carMake);
+    // ... more functions
+};
+```
+
+### Why the Semicolon After the Class Closing Brace?
+
+Unlike a function, a class definition ends with `};` — the semicolon is required. Forgetting it is one of the most common beginner mistakes and produces confusing error messages.
+
+### Scope Resolution When Defining Functions Outside the Class
+
+If you define member functions outside the class body, prefix them with `ClassName::`:
+
+```cpp
+void Car::accelerate()
+{
+    speed += 5;
 }
-```
-
-### Calculating the Inpatient Total
-
-The inpatient total includes the room cost (days × daily rate) plus all additional charges:
-
-```
-total = (days × dailyRate) + medicationCharges + servicesCharges
-```
-
-### Calculating the Outpatient Total
-
-The outpatient total is simply the sum of the two charges collected:
-
-```
-total = servicesCharges + medicationCharges
 ```
 
 ### Common Mistakes to Avoid
 
-❌ **Mistake:** Defining two functions with the same name *and* the same parameter list  
-✅ **Correct:** The two `calcCharges` functions must differ in their parameter lists
+❌ **Mistake:** Making member variables `public`  
+✅ **Correct:** Keep `yearModel`, `make`, and `speed` `private` — expose them only through accessor functions
 
-❌ **Mistake:** Forgetting function prototypes when definitions appear below `main`  
-✅ **Correct:** Declare prototypes above `main` so the compiler knows each function exists before it is called
+❌ **Mistake:** Forgetting to initialize `speed` to zero in the constructor  
+✅ **Correct:** Always assign `speed = 0;` (or use an initializer list) in the constructor body
 
-❌ **Mistake:** Accepting `0` as invalid  
-✅ **Correct:** The rule is no *negative* numbers — zero is a perfectly valid charge
+❌ **Mistake:** Forgetting the semicolon after the closing `}` of the class definition  
+✅ **Correct:** End the class with `};`
 
-❌ **Mistake:** Only testing one patient type  
-✅ **Correct:** Always test both the inpatient and outpatient branches
+---
+
+*Good luck — and remember, every real program you'll ever write uses classes like this one.*
 
 ---
 
